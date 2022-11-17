@@ -1,4 +1,4 @@
-package com.luv2code.testdb;
+package com.luv2code.springdemo.testdb;
 
 import java.io.*;
 import java.sql.Connection;
