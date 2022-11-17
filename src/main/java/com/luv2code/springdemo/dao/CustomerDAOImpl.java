@@ -6,11 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Repository
-public class CustomerDAOImpl implements CustomerDAO{
+public class CustomerDAOImpl implements CustomerDAO {
     // need to inject the session factory
     @Autowired
     private SessionFactory sessionFactory;
@@ -19,11 +19,11 @@ public class CustomerDAOImpl implements CustomerDAO{
     public List<Customer> getCustomer() {
 
         // get the current hibernate session
-        Session currentSession=sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.getCurrentSession();
         //create a query .... sort by last name
-        Query<Customer> theQuery=currentSession.createQuery("from Customer order by firstName",Customer.class);
+        Query<Customer> theQuery = currentSession.createQuery("from Customer order by id", Customer.class);
         //   execute query and get result list
-        List<Customer>customers=theQuery.getResultList();
+        List<Customer> customers = theQuery.getResultList();
         // return the results
         return customers;
     }
@@ -32,9 +32,23 @@ public class CustomerDAOImpl implements CustomerDAO{
     public void saveCustomer(Customer theCustomer) {
 
         //  get current hibernate session
-        Session currentSession=sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        //  save the customer ,,,
-        currentSession.save(theCustomer);
+        //  save/update the customer ,,,
+        //  currentSession.save(theCustomer);
+
+        currentSession.saveOrUpdate(theCustomer);
+    }
+
+    @Override
+    public Customer getCustomer(int theId) {
+
+        //  get the current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+        //  now retrieve/read from database using the primary key
+        Customer theCustomer = currentSession.get(Customer.class, theId);
+
+        return theCustomer;
+
     }
 }

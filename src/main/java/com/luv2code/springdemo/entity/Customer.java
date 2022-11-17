@@ -60,4 +60,26 @@ public class Customer {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        Customer customer = (Customer) o;
+
+        if (getId() != customer.getId()) return false;
+        if (!getFirstName().equals(customer.getFirstName())) return false;
+        if (!getLastName().equals(customer.getLastName())) return false;
+        return getEmail().equals(customer.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        return result;
+    }
 }
