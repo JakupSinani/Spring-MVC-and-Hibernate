@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.List;
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
-    //  need to inject customer dao
+    // need to inject customer dao
     @Autowired
     private CustomerDAO customerDAO;
 
     @Override
     @Transactional
     public List<Customer> getCustomers() {
-        return customerDAO.getCustomer();
+        return customerDAO.getCustomers();
     }
 
     @Override
     @Transactional
     public void saveCustomer(Customer theCustomer) {
+
         customerDAO.saveCustomer(theCustomer);
     }
 
@@ -33,4 +33,12 @@ public class CustomerServiceImpl implements CustomerService{
 
         return customerDAO.getCustomer(theId);
     }
+
+    @Override
+    @Transactional
+    public void deleteCustomer(int theId) {
+
+        customerDAO.deleteCustomer(theId);
+    }
 }
+

@@ -1,4 +1,4 @@
-package com.luv2code.springdemo.testdb;
+package com.luv2code.testdb;
 
 import java.io.*;
 import java.sql.Connection;
@@ -7,45 +7,47 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "testdbservlet", value = "/TestDbServlet")
+/**
+ * Servlet implementation class TestDbServlet
+ */
+@WebServlet("/TestDbServlet")
 public class TestDbServlet extends HttpServlet {
-    private String message;
+    private static final long serialVersionUID = 1L;
 
-    public void init() {
-        message = "Hello World!";
-    }
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    //setup connection variables
-        String user="root";
-        String pass="123456";
+        // setup connection variables
+        String user = "springstudent";
+        String pass = "springstudent";
 
-        String jdbcurl="jdbc:mysql://localhost:3306/hb_web_customer_tracker?useSSL=false&serverTimezone=UTC";
-        String driver ="com.mysql.cj.jdbc.Driver";
-        //get connection to database
+        String jdbcUrl = "jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&serverTimezone=UTC";
+        String driver = "com.mysql.cj.jdbc.Driver";
+
+        // get connection to database
         try {
-            PrintWriter out=response.getWriter();
+            PrintWriter out = response.getWriter();
 
-            out.println("Connecting to database: "+jdbcurl);
+            out.println("Connecting to database: " + jdbcUrl);
 
             Class.forName(driver);
-            Connection myConn= DriverManager.getConnection(jdbcurl,user,pass);
-            out.println("SUCCESS");
+
+            Connection myConn = DriverManager.getConnection(jdbcUrl, user, pass);
+
+            out.println("SUCCESS!!!");
 
             myConn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException(e);
+
+        }
+        catch (Exception exc) {
+            exc.printStackTrace();
+            throw new ServletException(exc);
         }
 
-        //        response.setContentType("text/html");
-//
-//        // Hello
-//        PrintWriter out = response.getWriter();
-//        out.println("<html><body>");
-//        out.println("<h1>" + message + "</h1>");
-//        out.println("</body></html>");
+
     }
 
-
 }
+
